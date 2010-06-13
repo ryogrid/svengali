@@ -1,0 +1,6 @@
+default:
+ package_install: yum install -y
+debian:
+ package_install: apt-get install
+ 
+ 

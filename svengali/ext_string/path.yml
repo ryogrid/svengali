@@ -1,0 +1,6 @@
+default:
+ sshd_config: /etc/ssh/sshd_config
+ network_configs: /etc/sysconfig/network-scripts/
+ resolver_config: /etc/sysconfig/network-scripts/ifcfg-eth0
+debian:
+ network_configs: /etc/network/
