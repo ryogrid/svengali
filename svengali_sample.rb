@@ -31,7 +31,7 @@ MACHINE_NUM.times{ |n|
 }
 
 nodes.each{ |a_node|
-    #設定ファイル(sshd_config)を編集
+    #設定ファイルを編集
     sshd_conf = a_node.get_config_file("xxxxxxx.xxx")
     sshd_conf.replace_col("xxxxxx","xxxxxx")
     sshd_conf.save()
