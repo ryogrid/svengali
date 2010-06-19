@@ -42,6 +42,6 @@ nodes.each{ |a_node|
    #スクリプトを転送
    a_node.push_a_file("./xxxx.sh","/home/xxx/xxxx.sh")
 
-   #実験用のスクリプトを実行
+   #スクリプトを実行
    puts a_node.exec_script_on("/home/xxx/xxxx.sh,"","/home/xxx")
 }
