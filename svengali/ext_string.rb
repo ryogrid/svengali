@@ -1,3 +1,5 @@
+require "yaml"
+
 # manages externarized strings on YAML files
 class ExtStr
   @@command_accessor = nil
