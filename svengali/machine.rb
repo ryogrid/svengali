@@ -19,24 +19,18 @@ require "#{LIBNAME}/ext_string"
     @ssh
     @sftp_session
     @password
+    @passphrase
+    @private_key_path
 
     attr_reader :ssh
 
     def initialize(host=nil)
       if host == nil  #substitute of constructor which has no argument
-#        include_plugin_modules()
       else
         @host = host.to_s()
         initialize()
       end
     end
-
-#    def include_plugin_modules()
-#      $to_load_modules.each{ |plugin_name|
-#        self.extend( plugin_name.capitalize().intern )
-#      }
-#    end
-#    private :include_plugin_modules
 
     def cleanup
       debug_p "start cleanup instance for " + @host
@@ -51,13 +45,26 @@ require "#{LIBNAME}/ext_string"
       @password = password
     end
 
+    def set_auth_info(user_name,passphrase,private_key_path)
+      @user_name = user_name
+      @passphrase = passphrase
+      @private_key_path = private_key_path
+    end
+
     def establish_session()
       debug_p "start establish_session to " + @host
       # Spawn worker threads
 
       th = Thread.new do
         debug_p "Initialization of Machine ##{@host} is started."
-        if @user_name && @password
+        if @private_key_path
+          if @user_name && @passphrase
+            @ssh = SSH.new(@host,@user_name,@passphrase)
+          else
+            debug_p "please set user name and password when you want to use public key authentication"
+            exit()            
+          end
+        elsif @user_name && @password
           @ssh = SSH.new(@host,@user_name,@password)
         elsif @user_name
           @ssh = SSH.new(@userneme)
@@ -71,7 +78,7 @@ require "#{LIBNAME}/ext_string"
         @@group.add(th)
       end
 
-      #wait util finishing initialize of @ssh object
+      #wait until finishing initialize of @ssh object
       while @ssh == nil
         sleep(1)
       end

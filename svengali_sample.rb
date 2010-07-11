@@ -19,7 +19,7 @@ MACHINE_NUM.times{ |n|
   nodes[n] = Machine.new(tmp_ipaddr)
   nodes[n].set_auth_info(user_name,password)
   #コマンドの発行が可能な通信路を確保する
-  nodes[n].establish_session() 
+  nodes[n].establish_session()
   puts nodes[n].exec!("uname -v")
   #change_platformしていない場合はyumが利用される
   puts nodes[n].install_package("xxxx")

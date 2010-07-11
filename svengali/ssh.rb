@@ -7,6 +7,8 @@ class SSH
   @host
   @user_name
   @password
+  @passphrase
+  @private_key_path
   @session
   @shell
   @sftp_session
@@ -14,21 +16,29 @@ class SSH
   attr_reader :sftp_session
   attr_reader :session
 
-  def initialize(host,user_name=nil,password=nil)
-    if user_name || password
-       @user_name = user_name
-       @password = password
-       initialize(host)
+  def initialize(host,user_name=nil,password=nil,private_key_path=nil)
+    if user_name && password && private_key_path
+      @user_name = user_name
+      @passphrase = password
+      @private_key_path = private_key_path
+    elsif user_name || password
+      @user_name = user_name
+      @password = password
+      initialize(host)
     else #substitute of constructor which has no argument
       @host = host
       @terminator = ""
 
       wait_until_ssh_connectable(CLibIPAddr.new(host))
-      
-      if @user_name && @password #if initialized with user_name and password
+
+      if @user_name && @password && @private_key_path #if initialized with private_key_path, user_name and password
+        debug_p "Try Net::SSH.start()!"
+        @session = Net::SSH.start(@host, @user_name,:passphrase => @passphrase, :keys => [ @private_key_path ] )
+      elsif @user_name && @password #if initialized with user_name and password
         debug_p "Try Net::SSH.start()!"
         @session = Net::SSH.start(@host, @user_name,:password => @password)
       elsif @user_name #if initialized with user_name
+        debug_p "Try Net::SSH.start()!"        
         @session = Net::SSH.start(@host, @user_name)
       end
       debug_p "Net::SSH.start finished."
