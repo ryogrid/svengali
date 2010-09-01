@@ -40,12 +40,16 @@ require "#{LIBNAME}/ext_string"
       # @@group.list.each {|th| th.join }
     end
 
-    def set_auth_info(user_name,password=nil)
+    # def set_auth_info(user_name)
+    #   @user_name = user_name
+    # end
+    
+    def set_auth_info(user_name,password = nil)
       @user_name = user_name
       @password = password
     end
 
-    def set_auth_info(user_name,passphrase,private_key_path)
+    def set_auth_info_pki(user_name,passphrase,private_key_path)
       @user_name = user_name
       @passphrase = passphrase
       @private_key_path = private_key_path
