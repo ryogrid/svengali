@@ -43,7 +43,7 @@ require "#{LIBNAME}/ext_string"
     # def set_auth_info(user_name)
     #   @user_name = user_name
     # end
-    
+
     def set_auth_info(user_name,password = nil)
       @user_name = user_name
       @password = password
@@ -66,7 +66,7 @@ require "#{LIBNAME}/ext_string"
             @ssh = SSH.new(@host,@user_name,@passphrase)
           else
             debug_p "please set user name and password when you want to use public key authentication"
-            exit()            
+            exit()
           end
         elsif @user_name && @password
           @ssh = SSH.new(@host,@user_name,@password)
@@ -100,7 +100,7 @@ require "#{LIBNAME}/ext_string"
 
     # call exec!( command ) on specified path
     # TODO: change function name to exec_on!
-    def exec_on(command_str,current_path_str)
+    def exec_on!(command_str,current_path_str)
       exec!("cd #{current_path_str};" + command_str)
     end
 
@@ -118,6 +118,6 @@ require "#{LIBNAME}/ext_string"
     def sftp()
       return @ssh.sftp_session
     end
-    
+
   end
 #end
