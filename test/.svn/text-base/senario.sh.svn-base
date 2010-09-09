@@ -1,4 +1,0 @@
-#! /bin/sh
-
-echo "invoked senario.sh"
-echo "`hostname`: Hello testing!!"
