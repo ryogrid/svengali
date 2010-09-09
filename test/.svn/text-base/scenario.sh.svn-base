@@ -1,0 +1,6 @@
+#! /bin/sh
+
+echo "current path: "`pwd`
+echo "invoked senario.sh"
+echo "`hostname`: Hello testing!!"
+#echo "`hostname`: Hello testing!!" > HELLO_TESTING
