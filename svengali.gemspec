@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{svengali}
-  s.version = "0.0.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ryo Kanbayashi"]
@@ -18,31 +18,42 @@ Gem::Specification.new do |s|
      "README.rdoc"
   ]
   s.files = [
-    "README",
+    "LICENSE",
+     "README",
+     "README.rdoc",
+     "Rakefile",
+     "VERSION",
      "api_document020_en.pdf",
      "api_document020_ja.pdf",
      "api_document_en.pptx",
      "api_document_ja.pptx",
-     "svengali/config.rb",
-     "svengali/ext_string.rb",
-     "svengali/ext_string/command.yml",
-     "svengali/ext_string/path.yml",
-     "svengali/file_io.rb",
-     "svengali/machine.rb",
-     "svengali/platforms/debian.rb",
-     "svengali/platforms/default.rb",
-     "svengali/plugins/eucalyptus.rb",
-     "svengali/plugins/machine_config.rb",
-     "svengali/plugins/package.rb",
-     "svengali/ssh.rb",
-     "svengali/svengali.rb",
-     "svengali/util.rb",
-     "svengali_sample.rb"
+     "lib/svengali.rb",
+     "lib/svengali/config.rb",
+     "lib/svengali/ext_string.rb",
+     "lib/svengali/ext_string/command.yml",
+     "lib/svengali/ext_string/path.yml",
+     "lib/svengali/file_io.rb",
+     "lib/svengali/machine.rb",
+     "lib/svengali/platforms/debian.rb",
+     "lib/svengali/platforms/default.rb",
+     "lib/svengali/plugins/eucalyptus.rb",
+     "lib/svengali/plugins/machine_config.rb",
+     "lib/svengali/plugins/package.rb",
+     "lib/svengali/ssh.rb",
+     "lib/svengali/svengali.rb",
+     "lib/svengali/util.rb",
+     "pkg/svengali-0.0.0.gem",
+     "spec/spec.opts",
+     "spec/spec_helper.rb",
+     "spec/svengali_spec.rb",
+     "svengali.gemspec",
+     "svengali_sample.rb",
+     "test/scenario.sh"
   ]
   s.homepage = %q{http://github.com/ryogrid/svengali}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{Svengali is distributed machine operating library of cloud age}
   s.test_files = [
     "spec/svengali_spec.rb",
@@ -53,7 +64,7 @@ Gem::Specification.new do |s|
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
     else
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
