@@ -5,12 +5,14 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "svengali"
-    gem.summary = "Svengali is distributed machine operating library of cloud age"
-    gem.description = "User can manage and operate distributed machines easier than by other tools like shell script"
+    gem.summary = "distributed machine operating library of cloud age"
+    gem.description = "Svengali offers means to manage and operate distributed machines easier than by other tools like shell script"
     gem.email = "ryo.contact [at] gmail.com"
-    gem.homepage = "http://github.com/ryogrid/svengali"
+    gem.homepage = "http://sourceforge.jp/projects/svengali/"
     gem.authors = ["Ryo Kanbayashi"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
+    gem.add_dependency "net-ssh", ">= 2.0.17"
+    gem.add_dependency "net-sftp", ">= 2.0.4"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new

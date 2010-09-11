@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Machine</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Machine</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/svengali/machine_rb.html">
+                lib/svengali/machine.rb
+                </a>
+        <br />
+                <a href="../files/lib/svengali/plugins/eucalyptus_rb.html">
+                lib/svengali/plugins/eucalyptus.rb
+                </a>
+        <br />
+                <a href="../files/lib/svengali/plugins/machine_config_rb.html">
+                lib/svengali/plugins/machine_config.rb
+                </a>
+        <br />
+                <a href="../files/lib/svengali/plugins/package_rb.html">
+                lib/svengali/plugins/package.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="MachineMaster.html">
+                MachineMaster
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000034">cleanup</a>&nbsp;&nbsp;
+      <a href="#M000047">config_nw_interface</a>&nbsp;&nbsp;
+      <a href="#M000045">destroy_instance</a>&nbsp;&nbsp;
+      <a href="#M000037">establish_session</a>&nbsp;&nbsp;
+      <a href="#M000038">exec</a>&nbsp;&nbsp;
+      <a href="#M000039">exec!</a>&nbsp;&nbsp;
+      <a href="#M000040">exec_on!</a>&nbsp;&nbsp;
+      <a href="#M000041">exec_script_on</a>&nbsp;&nbsp;
+      <a href="#M000044">get_instance_info</a>&nbsp;&nbsp;
+      <a href="#M000049">install_package</a>&nbsp;&nbsp;
+      <a href="#M000033">new</a>&nbsp;&nbsp;
+      <a href="#M000035">set_auth_info</a>&nbsp;&nbsp;
+      <a href="#M000036">set_auth_info_pki</a>&nbsp;&nbsp;
+      <a href="#M000043">set_instance_info</a>&nbsp;&nbsp;
+      <a href="#M000048">set_resolver</a>&nbsp;&nbsp;
+      <a href="#M000046">set_whether_do_cache</a>&nbsp;&nbsp;
+      <a href="#M000042">sftp</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="Config.html">Config</a></span>
+        <span class="include-name"><a href="FileIO.html">FileIO</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ssh</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000033" class="method-detail">
+        <a name="M000033"></a>
+
+        <div class="method-heading">
+          <a href="#M000033" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(host=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000033-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000033-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/machine.rb, line 27</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">host</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">host</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>  <span class="ruby-comment cmt">#substitute of constructor which has no argument</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-ivar">@host</span> = <span class="ruby-identifier">host</span>.<span class="ruby-identifier">to_s</span>()
+        <span class="ruby-identifier">initialize</span>()
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000034" class="method-detail">
+        <a name="M000034"></a>
+
+        <div class="method-heading">
+          <a href="#M000034" class="method-signature">
+          <span class="method-name">cleanup</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000034-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/machine.rb, line 35</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cleanup</span>
+      <span class="ruby-identifier">debug_p</span> <span class="ruby-value str">&quot;start cleanup instance for &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@host</span>
+      <span class="ruby-ivar">@sftp_session</span>.<span class="ruby-identifier">close_channel</span>()
+      <span class="ruby-ivar">@ssh</span>.<span class="ruby-identifier">close</span>()
+      <span class="ruby-identifier">debug_p</span> <span class="ruby-value str">&quot;finished cleanup instance for &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@host</span>
+      <span class="ruby-comment cmt"># @@group.list.each {|th| th.join }</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000047" class="method-detail">
+        <a name="M000047"></a>
+
+        <div class="method-heading">
+          <a href="#M000047" class="method-signature">
+          <span class="method-name">config_nw_interface</span><span class="method-args">(params_hash)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+:ipaddr -&gt; <a href="CLibIPAddr.html">CLibIPAddr</a> : IP address which
+assigned to interface :interface -&gt; string : interface name :netmask
+-&gt; string : netmask :gateway -&gt; <a
+href="CLibIPAddr.html">CLibIPAddr</a> : IP address of gateway :onboot -&gt;
+string : yes or no (you can omit) :hwaddr -&gt; string : MAC address (you
+can omit)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000047-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000047-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/machine_config.rb, line 9</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config_nw_interface</span>(<span class="ruby-identifier">params_hash</span>)
+    <span class="ruby-identifier">config_file</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">interface_name_str</span> = <span class="ruby-identifier">params_hash</span>[<span class="ruby-identifier">:interface</span>]
+      <span class="ruby-comment cmt">#open or create target file</span>
+      <span class="ruby-identifier">target_path</span> = <span class="ruby-constant">ExtStr</span>.<span class="ruby-identifier">path</span>[<span class="ruby-value str">&quot;network_configs&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;ifcfg-&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">interface_name_str</span>
+      <span class="ruby-identifier">config_file</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_config_file</span>(<span class="ruby-identifier">target_path</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">err_message_and_exit</span>(<span class="ruby-value str">&quot;please specify a value of :interface!&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">netmask</span> = <span class="ruby-identifier">params_hash</span>[<span class="ruby-identifier">:netmask</span>]
+      <span class="ruby-identifier">netmask_str</span> = <span class="ruby-identifier">netmask</span>.<span class="ruby-identifier">to_s</span>()
+      <span class="ruby-comment cmt"># remove_col_by_regexp should be used under normal condition</span>
+      <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">remove_col_by_str</span>(<span class="ruby-value str">&quot;NETMASK&quot;</span>)
+      <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">append_str</span>(<span class="ruby-value str">&quot;NETMASK=&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">netmask_str</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n&quot;</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">err_message_and_exit</span>(<span class="ruby-value str">&quot;please specify a value of :netmask!&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ipaddr</span> = <span class="ruby-identifier">params_hash</span>[<span class="ruby-identifier">:ipaddr</span>]
+      <span class="ruby-identifier">ipaddr_str</span> = <span class="ruby-identifier">ipaddr</span>.<span class="ruby-identifier">to_s</span>()
+      <span class="ruby-comment cmt"># remove_col_by_regexp should be used under normal condition</span>
+      <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">remove_col_by_str</span>(<span class="ruby-value str">&quot;IPADDR&quot;</span>)
+      <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">append_str</span>(<span class="ruby-value str">&quot;IPADDR=&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ipaddr_str</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n&quot;</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">err_message_and_exit</span>(<span class="ruby-value str">&quot;please specify a value of :ipaddr!&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">gateway</span> = <span class="ruby-identifier">params_hash</span>[<span class="ruby-identifier">:gateway</span>]
+      <span class="ruby-identifier">gateway_str</span> = <span class="ruby-identifier">gateway</span>.<span class="ruby-identifier">to_s</span>()
+      <span class="ruby-comment cmt"># remove_col_by_regexp should be used under normal condition</span>
+      <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">remove_col_by_str</span>(<span class="ruby-value str">&quot;GATEWAY&quot;</span>)
+      <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">append_str</span>(<span class="ruby-value str">&quot;GATEWAY=&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">gateway_str</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n&quot;</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">err_message_and_exit</span>(<span class="ruby-value str">&quot;please specify a value of :gateway!&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">hwaddr</span> = <span class="ruby-identifier">params_hash</span>[<span class="ruby-identifier">:hwaddr</span>]
+      <span class="ruby-comment cmt"># remove_col_by_regexp should be used under normal condition</span>
+      <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">remove_col_by_str</span>(<span class="ruby-value str">&quot;HWADDR&quot;</span>)
+      <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">append_str</span>(<span class="ruby-value str">&quot;HWADDR=&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">hwaddr</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">onboot</span> = <span class="ruby-identifier">params_hash</span>[<span class="ruby-identifier">:onboot</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;yes&quot;</span> <span class="ruby-comment cmt"># default is &quot;yes&quot;</span>
+    <span class="ruby-comment cmt"># remove_col_by_regexp should be used under normal condition</span>
+    <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">remove_col_by_str</span>(<span class="ruby-value str">&quot;ONBOOT&quot;</span>)
+    <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">append_str</span>(<span class="ruby-value str">&quot;ONBOOT=&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">onboot</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n&quot;</span>)
+
+    <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">remove_col_by_str</span>(<span class="ruby-value str">&quot;BOOTPROTO&quot;</span>)
+    <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">append_str</span>(<span class="ruby-value str">&quot;BOOTRPROTO=static\n&quot;</span>)
+
+    <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">save</span>()
+    <span class="ruby-identifier">lazy_inp</span>()
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <a href="#M000045" class="method-signature">
+          <span class="method-name">destroy_instance</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000045-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000045-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/eucalyptus.rb, line 141</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy_instance</span>()
+    <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@instance_id_str</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;set_cloud_info() should be called appropriately before destroying instance&quot;</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;exit destroy_instance() without terminating&quot;</span>
+      <span class="ruby-keyword kw">return</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@@do_cache</span>
+      <span class="ruby-identifier">terminate_instance</span>(<span class="ruby-ivar">@instance_id_str</span>)
+    <span class="ruby-keyword kw">end</span>
+    
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
+
+        <div class="method-heading">
+          <a href="#M000037" class="method-signature">
+          <span class="method-name">establish_session</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000037-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000037-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/machine.rb, line 58</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">establish_session</span>()
+      <span class="ruby-identifier">debug_p</span> <span class="ruby-value str">&quot;start establish_session to &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@host</span>
+      <span class="ruby-comment cmt"># Spawn worker threads</span>
+
+      <span class="ruby-identifier">th</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span>
+        <span class="ruby-identifier">debug_p</span> <span class="ruby-node">&quot;Initialization of Machine ##{@host} is started.&quot;</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@private_key_path</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@user_name</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@passphrase</span>
+            <span class="ruby-ivar">@ssh</span> = <span class="ruby-constant">SSH</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@host</span>,<span class="ruby-ivar">@user_name</span>,<span class="ruby-ivar">@passphrase</span>)
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">debug_p</span> <span class="ruby-value str">&quot;please set user name and password when you want to use public key authentication&quot;</span>
+            <span class="ruby-identifier">exit</span>()
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@user_name</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@password</span>
+          <span class="ruby-ivar">@ssh</span> = <span class="ruby-constant">SSH</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@host</span>,<span class="ruby-ivar">@user_name</span>,<span class="ruby-ivar">@password</span>)
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@user_name</span>
+          <span class="ruby-ivar">@ssh</span> = <span class="ruby-constant">SSH</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@userneme</span>)
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">debug_p</span> <span class="ruby-value str">&quot;please set user name at leaset&quot;</span>
+          <span class="ruby-identifier">exit</span>()
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">debug_p</span> <span class="ruby-node">&quot;Initialization of Machine ##{@host} is finished.&quot;</span>
+
+        <span class="ruby-ivar">@sftp_session</span> = <span class="ruby-ivar">@ssh</span>.<span class="ruby-identifier">sftp_session</span>
+        <span class="ruby-ivar">@@group</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">th</span>)
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt">#wait until finishing initialize of @ssh object</span>
+      <span class="ruby-keyword kw">while</span> <span class="ruby-ivar">@ssh</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+        <span class="ruby-identifier">sleep</span>(<span class="ruby-value">1</span>)
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-identifier">debug_p</span> <span class="ruby-value str">&quot;finished establish_session to &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@host</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
+
+        <div class="method-heading">
+          <a href="#M000038" class="method-signature">
+          <span class="method-name">exec</span><span class="method-args">(command_str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000038-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/machine.rb, line 93</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exec</span>(<span class="ruby-identifier">command_str</span>)
+      <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@ssh</span>.<span class="ruby-identifier">exec</span>(<span class="ruby-identifier">command_str</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
+
+        <div class="method-heading">
+          <a href="#M000039" class="method-signature">
+          <span class="method-name">exec!</span><span class="method-args">(command_str,timeout = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000039-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/machine.rb, line 97</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exec!</span>(<span class="ruby-identifier">command_str</span>,<span class="ruby-identifier">timeout</span> = <span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@ssh</span>.<span class="ruby-identifier">exec!</span>(<span class="ruby-identifier">command_str</span>,<span class="ruby-identifier">timeout</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+          <a href="#M000040" class="method-signature">
+          <span class="method-name">exec_on!</span><span class="method-args">(command_str,current_path_str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+call <a href="Machine.html#M000039">exec!</a>( command ) on specified path
+TODO: change function name to <a href="Machine.html#M000040">exec_on!</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000040-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/machine.rb, line 103</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exec_on!</span>(<span class="ruby-identifier">command_str</span>,<span class="ruby-identifier">current_path_str</span>)
+      <span class="ruby-identifier">exec!</span>(<span class="ruby-node">&quot;cd #{current_path_str};&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">command_str</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
+
+        <div class="method-heading">
+          <a href="#M000041" class="method-signature">
+          <span class="method-name">exec_script_on</span><span class="method-args">(script_path_str,arguments_str,current_path_str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+execute local script on remote current_path_str -&gt; string: if change of
+directory is not needed, please pass &quot;.&quot; use remote /tmp
+directory to store script file TODO: change function name to
+exec_script_on!
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000041-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000041-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/machine.rb, line 111</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exec_script_on</span>(<span class="ruby-identifier">script_path_str</span>,<span class="ruby-identifier">arguments_str</span>,<span class="ruby-identifier">current_path_str</span>)
+      <span class="ruby-identifier">fname_str</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">script_path_str</span>)
+      <span class="ruby-identifier">rempte_path_str</span> = <span class="ruby-value str">&quot;/tmp/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">fname_str</span>
+      <span class="ruby-identifier">push_a_file</span>(<span class="ruby-identifier">script_path_str</span>,<span class="ruby-identifier">rempte_path_str</span>)
+      <span class="ruby-identifier">exec_on!</span>(<span class="ruby-node">&quot;sh #{rempte_path_str} &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">arguments_str</span>,<span class="ruby-identifier">current_path_str</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+          <a href="#M000044" class="method-signature">
+          <span class="method-name">get_instance_info</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+return -&gt; string: ID of vm instance
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000044-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000044-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/eucalyptus.rb, line 137</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_instance_info</span>()
+    <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@instance_id_str</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000049" class="method-detail">
+        <a name="M000049"></a>
+
+        <div class="method-heading">
+          <a href="#M000049" class="method-signature">
+          <span class="method-name">install_package</span><span class="method-args">(package_name_str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000049-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000049-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/package.rb, line 3</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">install_package</span>(<span class="ruby-identifier">package_name_str</span>)
+    <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@ssh</span>.<span class="ruby-identifier">exec!</span>(<span class="ruby-constant">ExtStr</span>.<span class="ruby-identifier">cmd</span>[<span class="ruby-value str">&quot;package_install&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">package_name_str</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
+
+        <div class="method-heading">
+          <a href="#M000035" class="method-signature">
+          <span class="method-name">set_auth_info</span><span class="method-args">(user_name,password = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Machine.html#M000035">set_auth_info</a>(user_name)
+</p>
+<pre>
+  @user_name = user_name
+</pre>
+<p>
+end
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000035-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/machine.rb, line 47</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_auth_info</span>(<span class="ruby-identifier">user_name</span>,<span class="ruby-identifier">password</span> = <span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-ivar">@user_name</span> = <span class="ruby-identifier">user_name</span>
+      <span class="ruby-ivar">@password</span> = <span class="ruby-identifier">password</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
+
+        <div class="method-heading">
+          <a href="#M000036" class="method-signature">
+          <span class="method-name">set_auth_info_pki</span><span class="method-args">(user_name,passphrase,private_key_path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000036-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/machine.rb, line 52</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_auth_info_pki</span>(<span class="ruby-identifier">user_name</span>,<span class="ruby-identifier">passphrase</span>,<span class="ruby-identifier">private_key_path</span>)
+      <span class="ruby-ivar">@user_name</span> = <span class="ruby-identifier">user_name</span>
+      <span class="ruby-ivar">@passphrase</span> = <span class="ruby-identifier">passphrase</span>
+      <span class="ruby-ivar">@private_key_path</span> = <span class="ruby-identifier">private_key_path</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
+
+        <div class="method-heading">
+          <a href="#M000043" class="method-signature">
+          <span class="method-name">set_instance_info</span><span class="method-args">(instance_id_str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000043-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000043-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/eucalyptus.rb, line 132</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_instance_info</span>(<span class="ruby-identifier">instance_id_str</span>)
+    <span class="ruby-ivar">@instance_id_str</span> = <span class="ruby-identifier">instance_id_str</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000048" class="method-detail">
+        <a name="M000048"></a>
+
+        <div class="method-heading">
+          <a href="#M000048" class="method-signature">
+          <span class="method-name">set_resolver</span><span class="method-args">(params_hash)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+!!!! Now, this method write resolver information !!!! !!!! to
+/etc/sysconfig/network-scripts/ifcfg-ethX !!!! !!!! due to baffling
+behavior of CentOS !!!!
+</p>
+<p>
+:primary_ip -&gt; <a href="CLibIPAddr.html">CLibIPAddr</a> : IP address of
+primary DNS :secondry_ip -&gt; <a href="CLibIPAddr.html">CLibIPAddr</a> :
+IP address of secondly DNS :search_domain -&gt; string : domain of search
+directive
+</p>
+<p>
+:interface -&gt; string : interface name (for CentOS)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000048-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000048-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/machine_config.rb, line 73</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_resolver</span>(<span class="ruby-identifier">params_hash</span>)
+    <span class="ruby-comment cmt">#open or create target file</span>
+    <span class="ruby-identifier">config_file</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">interface_name_str</span> = <span class="ruby-identifier">params_hash</span>[<span class="ruby-identifier">:interface</span>]
+      <span class="ruby-identifier">target_path</span> = <span class="ruby-constant">ExtStr</span>.<span class="ruby-identifier">path</span>[<span class="ruby-value str">&quot;network_configs&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;ifcfg-&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">interface_name_str</span>
+      <span class="ruby-identifier">config_file</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_config_file</span>(<span class="ruby-identifier">target_path</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">err_message_and_exit</span>(<span class="ruby-value str">&quot;please specify a value of :interface!&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+
+
+<span class="ruby-comment cmt">#    target_path = ExtStr.path[&quot;resolver_config&quot;]</span>
+<span class="ruby-comment cmt">#    config_file = self.get_config_file(target_path)</span>
+<span class="ruby-comment cmt">#</span>
+<span class="ruby-comment cmt">#    if search_domain = params_hash[:search_domain]</span>
+<span class="ruby-comment cmt">#      # remove_col_by_regexp should be used under normal condition</span>
+<span class="ruby-comment cmt">#      config_file.append_str(&quot;search &quot; + search_domain + &quot;\n&quot;)</span>
+<span class="ruby-comment cmt">#    end</span>
+<span class="ruby-comment cmt">#</span>
+<span class="ruby-comment cmt">#    if primary_ip = params_hash[:primary_ip]</span>
+<span class="ruby-comment cmt">#      primary_ip_str = primary_ip.to_s()</span>
+<span class="ruby-comment cmt">#      # remove_col_by_regexp should be used under normal condition</span>
+<span class="ruby-comment cmt">#      config_file.remove_col_by_str(&quot;nameserver&quot;)</span>
+<span class="ruby-comment cmt">#      config_file.append_str(&quot;nameserver &quot; + primary_ip_str + &quot;\n&quot;)</span>
+<span class="ruby-comment cmt">#    else</span>
+<span class="ruby-comment cmt">#      err_message_and_exit(&quot;please specify a value of :primary_ip!&quot;)</span>
+<span class="ruby-comment cmt">#    end</span>
+<span class="ruby-comment cmt">#</span>
+<span class="ruby-comment cmt">#    if secondly_ip = params_hash[:secondly_ip]</span>
+<span class="ruby-comment cmt">#      secondly_ip_str = secondly_ip.to_s()</span>
+<span class="ruby-comment cmt">#      # remove_col_by_regexp should be used under normal condition</span>
+<span class="ruby-comment cmt">#      config_file.append_str(&quot;nameserver &quot; + secondly_ip_str + &quot;\n&quot;)</span>
+<span class="ruby-comment cmt">#    end</span>
+
+    
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">primary_ip</span> = <span class="ruby-identifier">params_hash</span>[<span class="ruby-identifier">:primary_ip</span>]
+      <span class="ruby-identifier">primary_ip_str</span> = <span class="ruby-identifier">primary_ip</span>.<span class="ruby-identifier">to_s</span>()
+      <span class="ruby-comment cmt"># remove_col_by_regexp should be used under normal condition</span>
+      <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">remove_col_by_str</span>(<span class="ruby-value str">&quot;PEERDNS&quot;</span>)
+      <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">append_str</span>(<span class="ruby-value str">&quot;PEERDNS=yes\n&quot;</span>)
+      
+      <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">remove_col_by_str</span>(<span class="ruby-value str">&quot;DNS1&quot;</span>)
+      <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">append_str</span>(<span class="ruby-value str">&quot;DNS1=&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">primary_ip_str</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n&quot;</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">err_message_and_exit</span>(<span class="ruby-value str">&quot;please specify a value of :primary_ip!&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">config_file</span>.<span class="ruby-identifier">save</span>()
+    
+    <span class="ruby-identifier">lazy_inp</span>()
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
+
+        <div class="method-heading">
+          <a href="#M000046" class="method-signature">
+          <span class="method-name">set_whether_do_cache</span><span class="method-args">(true_or_false)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+set whether cache and reuse guest instance on Eucalyptus if true value is
+set
+</p>
+<pre>
+    - destroy_instance(...) doesn't terminate instance
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000046-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000046-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/eucalyptus.rb, line 157</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_whether_do_cache</span>(<span class="ruby-identifier">true_or_false</span>)
+    <span class="ruby-ivar">@@do_cache</span> = <span class="ruby-identifier">true_or_false</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
+
+        <div class="method-heading">
+          <a href="#M000042" class="method-signature">
+          <span class="method-name">sftp</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000042-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000042-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/machine.rb, line 118</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sftp</span>()
+      <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@ssh</span>.<span class="ruby-identifier">sftp_session</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

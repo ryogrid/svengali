@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: eucalyptus.rb</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>eucalyptus.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>lib/svengali/plugins/eucalyptus.rb
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sat Jun 12 15:55:44 +0900 2010</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+    <div id="requires-list">
+      <h3 class="section-bar">Required files</h3>
+
+      <div class="name-list">
+      timeout&nbsp;&nbsp;
+      yaml&nbsp;&nbsp;
+      </div>
+    </div>
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000018">delete_image</a>&nbsp;&nbsp;
+      <a href="#M000016">get_all_instance_id</a>&nbsp;&nbsp;
+      <a href="#M000012">get_instance_state</a>&nbsp;&nbsp;
+      <a href="#M000013">run_image</a>&nbsp;&nbsp;
+      <a href="#M000014">terminate_instance</a>&nbsp;&nbsp;
+      <a href="#M000015">terminate_instance_all</a>&nbsp;&nbsp;
+      <a href="#M000017">upload_and_register_image</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+          <a href="#M000018" class="method-signature">
+          <span class="method-name">delete_image</span><span class="method-args">(image_id_str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+deregister specified image and delete images on server
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000018-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/eucalyptus.rb, line 106</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_image</span>(<span class="ruby-identifier">image_id_str</span>)
+  <span class="ruby-node">`euca-deregister #{image_id_str}`</span>
+  <span class="ruby-identifier">bucket_and_image</span> = <span class="ruby-identifier">get_bucket_and_image_name_by_id</span>(<span class="ruby-identifier">image_id_str</span>)
+
+  <span class="ruby-node">`euca-delete-bundle -b #{bucket_and_image[:bucket]} -p #{bucket_and_image[:image]} --clear`</span>
+
+  <span class="ruby-identifier">debug_p</span> <span class="ruby-node">&quot;deregisterd and deleted #{image_id_str}&quot;</span>
+<span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+          <a href="#M000016" class="method-signature">
+          <span class="method-name">get_all_instance_id</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+return -&gt; array : like this
+</p>
+<pre>
+                 [&quot;i-xxxx&quot;,&quot;i-xxxx&quot;,&quot;i-xxxx&quot;,...]
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000016-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000016-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/eucalyptus.rb, line 66</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_all_instance_id</span>()
+  <span class="ruby-identifier">ret_arr</span> = <span class="ruby-value">`euca-describe-instances`</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/\s+(i-\w+)\s+/</span>)
+  <span class="ruby-identifier">debug_p</span> <span class="ruby-identifier">ret_arr</span>.<span class="ruby-identifier">inspect</span>()
+  <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">ret_arr</span>
+<span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="#M000012" class="method-signature">
+          <span class="method-name">get_instance_state</span><span class="method-args">(instance_id_str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+return -&gt; symbol : one of values below
+</p>
+<pre>
+                      :running, :pending, :shutdown, :terminated
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000012-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/eucalyptus.rb, line 6</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_instance_state</span>(<span class="ruby-identifier">instance_id_str</span>)
+  <span class="ruby-identifier">exec_result</span> = <span class="ruby-value str">&quot;&quot;</span>
+  <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">exec_result</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&quot;</span>
+    <span class="ruby-identifier">exec_result</span> = <span class="ruby-node">`euca-describe-instances #{instance_id_str}`</span>
+  <span class="ruby-keyword kw">end</span>
+  
+  <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">exec_result</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">&quot;pending&quot;</span>)
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:pending</span>
+  <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">exec_result</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">&quot;running&quot;</span>)
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:running</span>
+  <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">exec_result</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">&quot;shutting-down&quot;</span>)
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:shutdown</span>
+  <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">exec_result</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">&quot;terminated&quot;</span>)
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:terminated</span>
+  <span class="ruby-keyword kw">end</span>
+<span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="#M000013" class="method-signature">
+          <span class="method-name">run_image</span><span class="method-args">(image_id_str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+return -&gt; string: id of running instance this function..
+</p>
+<pre>
+              blocks until kicked image starts running
+              uses c1.medium machine spec
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000013-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/eucalyptus.rb, line 27</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run_image</span>(<span class="ruby-identifier">image_id_str</span>)
+  <span class="ruby-keyword kw">begin</span>
+    <span class="ruby-identifier">debug_p</span> <span class="ruby-node">&quot;trying kick instance from image #{image_id_str}&quot;</span>
+    <span class="ruby-identifier">instance_id</span> = <span class="ruby-node">`euca-run-instances #{image_id_str} -t c1.medium`</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/\s+(i-\w+)\s+/</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">to_s</span>
+  <span class="ruby-keyword kw">rescue</span>
+    <span class="ruby-identifier">debug_p</span> <span class="ruby-value str">&quot;retry!&quot;</span>
+    <span class="ruby-keyword kw">retry</span>
+  <span class="ruby-keyword kw">end</span>
+
+  <span class="ruby-comment cmt"># waits until instance finishes booting</span>
+  <span class="ruby-keyword kw">while</span>(<span class="ruby-identifier">get_instance_state</span>(<span class="ruby-identifier">instance_id</span>) <span class="ruby-operator">!=</span> <span class="ruby-identifier">:running</span>)
+  <span class="ruby-keyword kw">end</span>
+
+  <span class="ruby-identifier">debug_p</span> <span class="ruby-node">&quot;instance( #{instance_id} ) has been running successfully.&quot;</span>
+
+  <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">instance_id</span>
+<span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="#M000014" class="method-signature">
+          <span class="method-name">terminate_instance</span><span class="method-args">(instance_id_str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+this method blocks until the instance finishs terminating
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/eucalyptus.rb, line 46</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">terminate_instance</span>(<span class="ruby-identifier">instance_id_str</span>)
+  <span class="ruby-node">`euca-terminate-instances #{instance_id_str}`</span>
+
+  <span class="ruby-keyword kw">while</span>(<span class="ruby-identifier">get_instance_state</span>(<span class="ruby-identifier">instance_id_str</span>) <span class="ruby-operator">!=</span> <span class="ruby-identifier">:terminated</span>)
+  <span class="ruby-keyword kw">end</span>
+
+  <span class="ruby-identifier">debug_p</span> <span class="ruby-node">&quot;instance( #{instance_id_str} ) has been terminated successfully.&quot;</span>
+<span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="#M000015" class="method-signature">
+          <span class="method-name">terminate_instance_all</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+this method blocks until the instance finishs terminating
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000015-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/eucalyptus.rb, line 56</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">terminate_instance_all</span>()
+  <span class="ruby-identifier">instance_id_arr</span> = <span class="ruby-identifier">get_all_instance_id</span>()
+
+  <span class="ruby-identifier">instance_id_arr</span>.<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">instance_id</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">terminate_instance</span>(<span class="ruby-identifier">instance_id</span>)
+  }
+<span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
+
+        <div class="method-heading">
+          <a href="#M000017" class="method-signature">
+          <span class="method-name">upload_and_register_image</span><span class="method-args">(image_path_str,timeout_sec = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+return -&gt; string: image id when timeout, returns nil
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000017-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/svengali/plugins/eucalyptus.rb, line 74</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">upload_and_register_image</span>(<span class="ruby-identifier">image_path_str</span>,<span class="ruby-identifier">timeout_sec</span> = <span class="ruby-keyword kw">nil</span>)
+  <span class="ruby-node">`euca-bundle-image -i #{image_path_str}`</span>
+  <span class="ruby-identifier">dir_name</span> = <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">image_path_str</span>)
+  <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">dir_name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;.&quot;</span>)
+    <span class="ruby-identifier">bucket_and_image_name</span> = <span class="ruby-identifier">image_path_str</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;./&quot;</span>,<span class="ruby-value str">&quot;&quot;</span>)
+  <span class="ruby-keyword kw">else</span>
+    <span class="ruby-identifier">bucket_and_image_name</span> = <span class="ruby-identifier">image_path_str</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-identifier">dir_name</span>,<span class="ruby-value str">&quot;&quot;</span>)
+  <span class="ruby-keyword kw">end</span>
+
+  <span class="ruby-keyword kw">begin</span>
+    <span class="ruby-identifier">timeout</span>(<span class="ruby-identifier">timeout_sec</span>) <span class="ruby-keyword kw">do</span>
+      <span class="ruby-node">`euca-upload-bundle -b #{bucket_and_image_name} -m /tmp/#{bucket_and_image_name}.manifest.xml`</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">TimeoutError</span>
+    <span class="ruby-value str">&quot;Too long time elapsed to upload image file. It is highly possible that uploading is missed&quot;</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+  <span class="ruby-keyword kw">end</span>
+
+  <span class="ruby-keyword kw">begin</span>
+    <span class="ruby-identifier">image_id</span> = <span class="ruby-node">`euca-register #{bucket_and_image_name}/#{bucket_and_image_name}.manifest.xml`</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/IMAGE\s+(emi\-\w+)\s*/</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">to_s</span>
+  <span class="ruby-keyword kw">rescue</span>
+    <span class="ruby-identifier">debug_p</span> <span class="ruby-value str">&quot;retry!&quot;</span>
+    <span class="ruby-keyword kw">retry</span>
+  <span class="ruby-keyword kw">end</span>
+  
+  <span class="ruby-node">`rm -f /tmp/#{bucket_and_image_name}*`</span>
+
+  <span class="ruby-identifier">debug_p</span> <span class="ruby-node">&quot;uploaded and registerd #{image_path_str}&quot;</span>
+  <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">image_id</span>
+<span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
