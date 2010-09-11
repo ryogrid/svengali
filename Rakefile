@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "svengali"
-    gem.summary = "distributed machine operating library of cloud age"
+    gem.summary = "distributed machine operating library of cloud age. please see http://sourceforge.jp/projects/svengali/wiki/FrontPage"
     gem.description = "Svengali offers means to manage and operate distributed machines easier than by other tools like shell script"
     gem.email = "ryo.contact [at] gmail.com"
     gem.homepage = "http://sourceforge.jp/projects/svengali/"

@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{svengali}
-  s.version = "0.2.7"
+  s.version = "0.2.7.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ryo Kanbayashi"]
@@ -42,11 +42,6 @@ Gem::Specification.new do |s|
      "lib/svengali/ssh.rb",
      "lib/svengali/svengali.rb",
      "lib/svengali/util.rb",
-     "pkg/svengali-0.0.0.gem",
-     "pkg/svengali-0.2.4.gem",
-     "pkg/svengali-0.2.5.gem",
-     "pkg/svengali-0.2.6.gem",
-     "pkg/svengali-0.2.7.gem",
      "rdoc/classes/CLibIPAddr.html",
      "rdoc/classes/Cloud.html",
      "rdoc/classes/Config.html",
@@ -90,7 +85,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{distributed machine operating library of cloud age}
+  s.summary = %q{distributed machine operating library of cloud age. please see http://sourceforge.jp/projects/svengali/wiki/FrontPage}
   s.test_files = [
     "spec/svengali_spec.rb",
      "spec/spec_helper.rb"
